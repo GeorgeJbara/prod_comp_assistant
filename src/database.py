@@ -17,12 +17,10 @@ logger = logging.getLogger(__name__)
 
 class DatabaseManager:
     def __init__(self, connection_string: Optional[str] = None):
-        # Use provided connection string or get from environment
-        self.connection_string = connection_string or os.getenv('DATABASE_URL')
-        
-        if not self.connection_string:
-            logger.error("No DATABASE_URL environment variable found")
-            raise ValueError("DATABASE_URL is required for database connection")
+        # Use provided connection string or get from environment with fallback
+        self.connection_string = connection_string or os.getenv('DATABASE_URL',
+            'postgresql://airline_complaints_db_user:YYpnKZXHOj1CRi3UZiNb4E7628U11o2M@dpg-d2omq5q4d50c73a4m56g-a.oregon-postgres.render.com/airline_complaints_db'
+        )
             
         logger.info(f"Connecting to database...")
         self.init_tables()
