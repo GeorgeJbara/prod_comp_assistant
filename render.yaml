@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: airline-complaint-api
+    runtime: python
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "uvicorn api_enhanced:app --host 0.0.0.0 --port $PORT"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
+      - key: DATABASE_URL
+        fromDatabase:
+          name: airline-complaints-db
+          property: connectionString
+      - key: OPENAI_API_KEY
+        sync: false  # You'll set this in Render dashboard
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: MODEL_TEMPERATURE
+        value: "0"
