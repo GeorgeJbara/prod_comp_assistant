@@ -17,3 +17,9 @@ services:
         value: gpt-4o-mini
       - key: MODEL_TEMPERATURE
         value: "0"
+
+databases:
+  - name: airline-complaints-db
+    databaseName: airline_complaints
+    user: airline_user
+    plan: free  # Free tier PostgreSQL
