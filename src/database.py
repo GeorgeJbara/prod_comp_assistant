@@ -67,9 +67,10 @@ class DatabaseManager:
                     cursor.execute("""
                         INSERT INTO tickets (
                             ticket_id, thread_id, passenger_name, passenger_email,
-                            passenger_phone, flight_number, booking_reference,
-                            original_complaint, category, priority, assigned_team, status
-                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            passenger_phone, flight_number, booking_reference, travel_date,
+                            original_complaint, category, sentiment, priority, 
+                            assigned_team, sla_deadline, status
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                     """, (
                         ticket_data['ticket_id'],
                         ticket_data['thread_id'],
@@ -78,10 +79,13 @@ class DatabaseManager:
                         ticket_data.get('passenger_phone'),
                         ticket_data.get('flight_number'),
                         ticket_data.get('booking_reference'),
+                        ticket_data.get('travel_date'),
                         ticket_data['original_complaint'],
                         ticket_data.get('category'),
+                        ticket_data.get('sentiment'),
                         ticket_data.get('priority'),
                         ticket_data.get('assigned_team'),
+                        ticket_data.get('sla_deadline'),
                         ticket_data.get('status', 'OPEN')
                     ))
                     conn.commit()

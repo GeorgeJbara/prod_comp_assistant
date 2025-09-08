@@ -232,6 +232,8 @@ Analyze this conversation and determine the appropriate action."""
     
     def _create_ticket(self, action: CreateTicketAction, thread_id: str) -> Dict[str, Any]:
         """Create a new ticket"""
+        from datetime import timedelta
+        
         ticket_id = f"TCK-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
         
         # Determine team assignment
@@ -242,6 +244,22 @@ Analyze this conversation and determine the appropriate action."""
             Priority.LOW: "General Support"
         }
         
+        # Calculate SLA deadline based on priority
+        sla_hours = {
+            Priority.CRITICAL: 2,
+            Priority.HIGH: 6,
+            Priority.MEDIUM: 24,
+            Priority.LOW: 72
+        }
+        sla_deadline = datetime.now() + timedelta(hours=sla_hours[action.priority])
+        
+        # Determine sentiment based on priority/category
+        sentiment = "NEUTRAL"
+        if action.priority in [Priority.CRITICAL, Priority.HIGH]:
+            sentiment = "VERY_NEGATIVE"
+        elif action.priority == Priority.MEDIUM:
+            sentiment = "NEGATIVE"
+        
         ticket_data = {
             "ticket_id": ticket_id,
             "thread_id": thread_id,
@@ -250,10 +268,13 @@ Analyze this conversation and determine the appropriate action."""
             "passenger_phone": action.passenger_info.phone,
             "flight_number": action.passenger_info.flight_number,
             "booking_reference": action.passenger_info.booking_reference,
+            "travel_date": None,  # Not extracted in simplified version
             "original_complaint": action.complaint,
             "category": action.category.value,
+            "sentiment": sentiment,
             "priority": action.priority.value,
             "assigned_team": team_map[action.priority],
+            "sla_deadline": sla_deadline,
             "status": "OPEN"
         }
         
