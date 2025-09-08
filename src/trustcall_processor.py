@@ -96,7 +96,7 @@ class TrustCallProcessor:
     def __init__(self, db_manager: DatabaseManager):
         self.db = db_manager
         self.llm = ChatOpenAI(
-            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+            model=os.getenv("OPENAI_MODEL", "gpt-4.1-mini"),
             temperature=float(os.getenv("MODEL_TEMPERATURE", "0.1"))
         )
     
