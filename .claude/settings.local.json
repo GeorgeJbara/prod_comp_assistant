@@ -1,7 +1,8 @@
 {
   "permissions": {
     "allow": [
-      "Bash(python:*)"
+      "Bash(python:*)",
+      "Read(//c/Users/User/Documents/Projects/Artefact POCs/airline-complaint-system/**)"
     ],
     "deny": [],
     "ask": []

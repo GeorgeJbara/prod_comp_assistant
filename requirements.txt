@@ -1,20 +1,20 @@
 # Core dependencies
-fastapi
-uvicorn[standard]
-pydantic>=1.10.0,<2.0.0
-python-dotenv
+fastapi>=0.100.0
+uvicorn>=0.23.0
+pydantic>=2.0.0
+python-dotenv>=1.0.0
 
 # Database
-psycopg2-binary
+psycopg2-binary>=2.9.0
 sqlalchemy
 
 # LangChain and LangGraph
-langchain
-langchain-openai
-langgraph
+langchain>=0.1.0
+langchain-openai>=0.0.5
+langgraph>=0.0.40
 
 # OpenAI
-openai
+openai>=1.0.0
 
 # Utilities
 colorama
